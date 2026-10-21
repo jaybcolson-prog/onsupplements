@@ -3,144 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>On Supplements | Gomitas de Creatina</title>
+    <title>On Supplements | Catálogo Oficial</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
+
         body {
             background-color: #0d0d0d;
             color: #f5f5f5;
-            line-height: 1.6;
-            padding: 20px;
+            line-height: 1.5;
+            padding: 15px 12px 120px 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
+
         .container {
             max-width: 480px;
             width: 100%;
-            background: #1a1a1a;
-            border-radius: 16px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #333;
+        }
+
+        header {
             text-align: center;
-            margin-top: auto;
-            margin-bottom: auto;
+            padding: 15px 0 20px 0;
+            border-bottom: 1px solid #222;
+            margin-bottom: 20px;
         }
+
         .logo {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 1px;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
             color: #ffffff;
-            margin-bottom: 5px;
+            text-transform: uppercase;
         }
+
         .logo span {
             color: #00FF66;
         }
+
         .subtitle {
-            font-size: 14px;
+            font-size: 12px;
             color: #888;
-            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            margin-top: 4px;
         }
-        .product-card {
-            background: #252525;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid #383838;
-            text-align: left;
-        }
-        .product-name {
-            font-size: 20px;
-            font-weight: 700;
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: #00FF66;
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .product-card {
+            background: #161616;
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid #262626;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .product-card:active {
+            border-color: #00FF66;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .product-desc {
+            font-size: 12.5px;
+            color: #999;
+            line-height: 1.4;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+
         .product-price {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 800;
             color: #00FF66;
-            margin-bottom: 12px;
         }
-        .product-desc {
+
+        /* Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            background: #222;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .btn-qty {
+            background: transparent;
+            border: none;
+            color: #00FF66;
+            font-size: 18px;
+            font-weight: 800;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn-qty:active {
+            background: #333;
+        }
+
+        .qty-number {
             font-size: 14px;
-            color: #ccc;
-            margin-bottom: 15px;
+            font-weight: 700;
+            color: #fff;
+            width: 28px;
+            text-align: center;
         }
-        .features {
-            list-style: none;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #aaa;
-        }
-        .features li {
-            margin-bottom: 5px;
-        }
-        .btn-whatsapp {
-            display: block;
-            width: 100%;
+
+        .btn-add {
             background-color: #00FF66;
             color: #000;
-            text-decoration: none;
-            padding: 14px;
+            border: none;
+            padding: 8px 16px;
             border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
+            font-weight: 800;
+            font-size: 13px;
             text-transform: uppercase;
+            cursor: pointer;
             letter-spacing: 0.5px;
-            transition: background 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3);
+            transition: transform 0.1s, background-color 0.2s;
         }
-        .btn-whatsapp:hover {
+
+        .btn-add:active {
+            transform: scale(0.96);
             background-color: #00cc52;
         }
-        .footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #666;
+
+        /* Cart Floating Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #141414;
+            border-top: 1px solid #2a2a2a;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.8);
         }
-        .footer a {
+
+        .cart-bar-content {
+            max-width: 480px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .cart-summary {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-count {
+            font-size: 12px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .cart-total {
+            font-size: 20px;
+            font-weight: 900;
+            color: #00FF66;
+        }
+
+        .btn-checkout {
+            background-color: #00FF66;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.25);
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn-checkout:disabled {
+            background-color: #333;
+            color: #666;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-checkout:not(:disabled):active {
+            transform: scale(0.97);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        footer a {
             color: #00FF66;
             text-decoration: none;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="logo">ON SUPPLEMENTS <span>⚡️</span></div>
-        <div class="subtitle">Rendimiento y Potencia</div>
+        <header>
+            <div class="logo">ON SUPPLEMENTS <span>⚡️</span></div>
+            <div class="subtitle">Nutrición & Equipamiento Deportivo</div>
+        </header>
 
-        <div class="product-card">
-            <div class="product-name">Gomitas de Creatina Gomex</div>
-            <div class="product-price">$45.000</div>
-            <div class="product-desc">
-                La forma más práctica, moderna y eficiente de consumir tu creatina diaria sin necesidad de agua ni mezcladores.
-            </div>
-            <ul class="features">
-                <li>📦 <strong>Presentación:</strong> Doypack resellable.</li>
-                <li>🔥 <strong>Beneficios:</strong> Fuerza, energía y recuperación.</li>
-                <li>📍 <strong>Zona:</strong> Lomas de Zamora y alrededores.</li>
-            </ul>
+        <div class="section-title">Catálogo de Productos</div>
+
+        <div class="products-grid" id="products-container">
+            <!-- Los productos se cargan dinámicamente -->
         </div>
 
-        <!-- ACORDATE: Cambiá el número 5491100000000 por tu número real con código de área (ej: 54911...) -->
-        <a href="https://wa.me/5491100000000?text=Hola!%20Quiero%20comprar%20las%20gomitas%20de%20creatina%20Gomex" class="btn-whatsapp" target="_blank">
-            Pedir por WhatsApp 🚀
-        </a>
+        <footer>
+            Lomas de Zamora | Instagram: <a href="https://instagram.com/on.supplements" target="_blank">@on.supplements</a>
+        </footer>
+    </div>
 
-        <div class="footer">
-            Seguinos en Instagram: <a href="https://instagram.com/on.supplements" target="_blank">@on.supplements</a>
+    <!-- Barra fija de carrito -->
+    <div class="cart-bar">
+        <div class="cart-bar-content">
+            <div class="cart-summary">
+                <span class="cart-count" id="cart-count">0 productos</span>
+                <span class="cart-total" id="cart-total">$0</span>
+            </div>
+            <button class="btn-checkout" id="btn-whatsapp" onclick="sendWhatsAppOrder()" disabled>
+                Pedir por WhatsApp 🚀
+            </button>
         </div>
     </div>
+
+    <script>
+        // Configuración de WhatsApp (Número del usuario)
+        const PHONE_NUMBER = "5491160236142";
+
+        // Lista oficial de productos
+        const products = [
+            {
+                id: 1,
+                name: "Proteína ENA True Made (Vanilla)",
+                price: 53250,
+                desc: "Sachet de 453g sabor Vanilla Ice Cream. Proteína de alta calidad para recuperación muscular."
+            },
+            {
+                id: 2,
+                name: "Gomitas de Creatina Gomex",
+                price: 45000,
+                desc: "Gomitas con sabor Blueberry. La forma más fácil y rica de consumir tu creatina diaria."
+            },
+            {
+                id: 3,
+                name: "Medias de Agarre (Grip Socks)",
+                price: 13000,
+                desc: "Medias antideslizantes de alto rendimiento para fútbol, rugby y entrenamiento."
+            },
+            {
+                id: 4,
+                name: "Cinta de Tela Deportiva (38mm)",
+                price: 11500,
+                desc: "Cinta rígida deportiva para vendajes y fijación estricta de articulaciones."
+            },
+            {
+                id: 5,
+                name: "Cinta Aisladora Deportiva (PVC)",
+                price: 6000,
+                desc: "Cinta de PVC blanca para estribos y refuerzo exterior de vendajes."
+            },
+            {
+                id: 6,
+                name: "Venda Autoadherente Tipo Coban",
+                price: 8000,
+                desc: "Venda cohesiva negra (10cm x 4.5m). Se adhiere sobre sí misma sin pegamento."
+            },
+            {
+                id: 7,
+                name: "Caja Barritas Crudda Brownie (10u)",
+                price: 19500,
+                desc: "Caja x10 unidades sabor Brownie. Proteicas, veganas y sin TACC."
+            },
+            {
+                id: 8,
+                name: "Caja Barritas Crudda Avellanas (10u)",
+                price: 19500,
+                desc: "Caja x10 unidades sabor Avellanas. Proteicas, veganas y sin TACC."
+            },
+            {
+                id: 9,
+                name: "Barrita Crudda (Suelta)",
+                price: 2400,
+                desc: "Barrita proteica individual (Brownie / Avellana según disponibilidad)."
+            }
+        ];
+
+        // Estado del carrito { id: cantidad }
+        const cart = {};
+
+        // Renderizar la lista de productos
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            products.forEach(p => {
+                const qty = cart[p.id] || 0;
+                
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+                        ${qty === 0 ? `
+                            <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
+                        ` : `
+                            <div class="quantity-controls">
+                                <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
+                                <span class="qty-number">${qty}</span>
+                                <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
+                            </div>
+                        `}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Actualizar cantidades en el carrito
+        function updateQty(id, change) {
+            const currentQty = cart[id] || 0;
+            const newQty = currentQty + change;
+
+            if (newQty <= 0) {
+                delete cart[id];
+            } else {
+                cart[id] = newQty;
+            }
+
+            renderProducts();
+            updateCartBar();
+        }
+
+        // Actualizar la barra inferior con totales
+        function updateCartBar() {
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            Object.keys(cart).forEach(id => {
+                const qty = cart[id];
+                const product = products.find(p => p.id == id);
+                if (product) {
+                    totalItems += qty;
+                    totalPrice += product.price * qty;
+                }
+            });
+
+            const countEl = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
+            const btnEl = document.getElementById('btn-whatsapp');
+
+            countEl.textContent = `${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`;
+            totalEl.textContent = `$${totalPrice.toLocaleString('es-AR')}`;
+            btnEl.disabled = totalItems === 0;
+        }
+
+        // Generar enlace de WhatsApp con el resumen
+        function sendWhatsAppOrder() {
+            let itemsText = "";
+            let totalPrice = 0;
+
+            Object.keys(cart).forEach(id => {
+                const qty = cart[id];
+                const product = products.find(p => p.id == id);
+                if (product) {
+                    const subtotal = product.price * qty;
+                    totalPrice += subtotal;
+                    itemsText += `• ${qty}x ${product.name} - $${subtotal.toLocaleString('es-AR')}\n`;
+                }
+            });
+
+            if (itemsText === "") return;
+
+            let message = `¡Hola! Quisiera hacer el siguiente pedido en On Supplements:\n\n`;
+            message += itemsText;
+            message += `\n*TOTAL: $${totalPrice.toLocaleString('es-AR')}*`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`, '_blank');
+        }
+
+        // Inicializar
+        renderProducts();
+        updateCartBar();
+    </script>
 
 </body>
 </html>
