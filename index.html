@@ -17,7 +17,7 @@
             background-color: #0d0d0d;
             color: #f5f5f5;
             line-height: 1.5;
-            padding: 15px 12px 120px 12px;
+            padding: 15px 12px 170px 12px; /* Margen extra abajo para no pisar el contenido */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -95,11 +95,13 @@
             display: flex;
             gap: 14px;
             align-items: center;
-            transition: border-color 0.2s;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
         }
 
         .product-card:active {
             border-color: #00FF66;
+            background-color: #1c1c1c;
         }
 
         .product-img-container {
@@ -141,6 +143,10 @@
             font-size: 12px;
             color: #999;
             line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .product-bottom {
@@ -212,14 +218,15 @@
             background-color: #00cc52;
         }
 
-        /* Cart Floating Bar */
+        /* Cart Floating Bar - ELEVADO PARA QUE NO LO TAPE NETLIFY */
         .cart-bar {
             position: fixed;
-            bottom: 0;
+            bottom: 50px; /* Eleva la barra para despejar la insignia de Netlify */
             left: 0;
             right: 0;
             background: #141414;
             border-top: 1px solid #2a2a2a;
+            border-bottom: 1px solid #2a2a2a;
             padding: 14px 16px;
             display: flex;
             justify-content: center;
@@ -279,8 +286,103 @@
             cursor: not-allowed;
         }
 
-        .btn-checkout:not(:disabled):active {
-            transform: scale(0.97);
+        /* MODAL / DETALLE DE PRODUCTO */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 200;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #181818;
+            border-top: 1px solid #333;
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-width: 480px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: slideUp 0.25s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #282828;
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-img-container {
+            width: 100%;
+            height: 220px;
+            background-color: #111;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.5;
+        }
+
+        .modal-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #262626;
+        }
+
+        .modal-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: #00FF66;
         }
 
         footer {
@@ -341,6 +443,22 @@
         </div>
     </div>
 
+    <!-- Modal Detalle de Producto -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-img-container">
+                <img id="modal-img" src="" alt="" class="modal-img">
+            </div>
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-desc" id="modal-desc"></div>
+            <div class="modal-bottom">
+                <div class="modal-price" id="modal-price"></div>
+                <div id="modal-controls"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const PHONE_NUMBER = "5491160236142";
 
@@ -351,7 +469,7 @@
                 category: "suplementos",
                 name: "Proteína ENA True Made (Vanilla)",
                 price: 53250,
-                desc: "Sachet de 453g sabor Vanilla Ice Cream.",
+                desc: "Sachet de 453g sabor Vanilla Ice Cream. Proteína concentrada y aislada de suero de leche de máxima pureza para promover la recuperación muscular post-entrenamiento.",
                 image: "proteina.webp.webp"
             },
             {
@@ -359,7 +477,7 @@
                 category: "suplementos",
                 name: "Gomitas de Creatina Gomex",
                 price: 45000,
-                desc: "Sabor Blueberry (120u). Dosis práctica diaria.",
+                desc: "Frasco x120 gomitas sabor Blueberry. Forma innovadora, rica y muy práctica para consumir tu dosis diaria de creatina monohidratada sin necesidad de mezclar con agua.",
                 image: "gomex.webp.webp"
             },
 
@@ -369,7 +487,7 @@
                 category: "accesorios",
                 name: "Medias de Agarre (Grip Socks)",
                 price: 13000,
-                desc: "Antideslizantes de alto rendimiento.",
+                desc: "Medias antideslizantes de alto rendimiento para fútbol, rugby y entrenamiento. Almohadillas de silicona que evitan el deslizamiento del pie dentro del calzado.",
                 image: "medias.webp.webp"
             },
             {
@@ -377,7 +495,7 @@
                 category: "accesorios",
                 name: "Cinta de Tela Deportiva (38mm)",
                 price: 11500,
-                desc: "Rígida para vendajes y articulaciones.",
+                desc: "Cinta de tela inelástica rígida deportiva (38mm). Ideal para vendajes funcionales y protección de articulaciones en deportes de alto impacto.",
                 image: "cinta-deportiva.webp.webp"
             },
             {
@@ -385,7 +503,7 @@
                 category: "accesorios",
                 name: "Cinta Aisladora Deportiva (PVC)",
                 price: 6000,
-                desc: "PVC blanca para estribos y refuerzos.",
+                desc: "Cinta de PVC blanca flexible para sujetar canilleras, medias y reforzar vendajes exteriores sin perder movilidad.",
                 image: "cinta-pvc.webp.webp"
             },
             {
@@ -393,7 +511,7 @@
                 category: "accesorios",
                 name: "Venda Autoadherente Tipo Coban",
                 price: 8000,
-                desc: "Cohesiva negra (10cm x 4.5m) autoadherente.",
+                desc: "Venda cohesiva negra (10cm x 4.5m). Se adhiere sobre sí misma sin necesitar clips ni pegamento, ideal para compresión y contención muscular.",
                 image: "venda-coban.webp.webp"
             },
 
@@ -403,7 +521,7 @@
                 category: "snacks",
                 name: "Caja Barritas Crudda Brownie (10u)",
                 price: 19500,
-                desc: "Caja x10 unidades sabor Brownie.",
+                desc: "Caja x10 unidades sabor Brownie. Barritas de proteína 100% vegetales, sin TACC, sin conservantes y endulzadas naturalmente.",
                 image: "crudda-brownie-caja.webp.webp"
             },
             {
@@ -411,7 +529,7 @@
                 category: "snacks",
                 name: "Caja Barritas Crudda Avellanas (10u)",
                 price: 19500,
-                desc: "Caja x10 unidades sabor Avellanas.",
+                desc: "Caja x10 unidades sabor Avellanas. Snack proteico vegano, sin TACC y rico en fibra natural para tus colaciones diarias.",
                 image: "crudda-avellana-caja.webp.webp"
             },
             {
@@ -419,7 +537,7 @@
                 category: "snacks",
                 name: "Barrita Crudda Brownie (Suelta)",
                 price: 2400,
-                desc: "Barrita proteica individual sabor Brownie.",
+                desc: "Barrita proteica individual sabor Brownie. Ideal para probar o llevar de snack rápido al gimnasio o entrenamiento.",
                 image: "crudda-brownie-suelta.webp.webp"
             },
             {
@@ -427,12 +545,13 @@
                 category: "snacks",
                 name: "Barrita Crudda Avellana (Suelta)",
                 price: 2400,
-                desc: "Barrita proteica individual sabor Avellana.",
+                desc: "Barrita proteica individual sabor Avellana. Snack rápido, proteico y saludable sin TACC.",
                 image: "crudda-avellana-suelta.webp.webp"
             }
         ];
 
         const cart = {};
+        let activeProductId = null;
 
         function renderProducts() {
             const gridSuplementos = document.getElementById('grid-suplementos');
@@ -448,6 +567,8 @@
                 
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                card.onclick = () => openModal(p.id);
+                
                 card.innerHTML = `
                     <div class="product-img-container">
                         <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/85/202020/00FF66?text=Foto';">
@@ -457,15 +578,17 @@
                         <div class="product-desc">${p.desc}</div>
                         <div class="product-bottom">
                             <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
-                            ${qty === 0 ? `
-                                <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
-                            ` : `
-                                <div class="quantity-controls">
-                                    <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
-                                    <span class="qty-number">${qty}</span>
-                                    <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
-                                </div>
-                            `}
+                            <div onclick="event.stopPropagation()">
+                                ${qty === 0 ? `
+                                    <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
+                                ` : `
+                                    <div class="quantity-controls">
+                                        <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
+                                        <span class="qty-number">${qty}</span>
+                                        <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
+                                    </div>
+                                `}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -478,6 +601,48 @@
                     gridSnacks.appendChild(card);
                 }
             });
+
+            if (activeProductId) {
+                renderModalControls(activeProductId);
+            }
+        }
+
+        function openModal(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            activeProductId = id;
+            document.getElementById('modal-img').src = p.image;
+            document.getElementById('modal-title').textContent = p.name;
+            document.getElementById('modal-desc').textContent = p.desc;
+            document.getElementById('modal-price').textContent = `$${p.price.toLocaleString('es-AR')}`;
+
+            renderModalControls(id);
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function renderModalControls(id) {
+            const controlsContainer = document.getElementById('modal-controls');
+            const qty = cart[id] || 0;
+
+            if (qty === 0) {
+                controlsContainer.innerHTML = `<button class="btn-add" style="padding: 10px 20px; font-size: 14px;" onclick="updateQty(${id}, 1)">Agregar al Carrito</button>`;
+            } else {
+                controlsContainer.innerHTML = `
+                    <div class="quantity-controls" style="padding: 2px;">
+                        <button class="btn-qty" style="width: 40px; height: 40px;" onclick="updateQty(${id}, -1)">-</button>
+                        <span class="qty-number" style="width: 32px; font-size: 16px;">${qty}</span>
+                        <button class="btn-qty" style="width: 40px; height: 40px;" onclick="updateQty(${id}, 1)">+</button>
+                    </div>
+                `;
+            }
+        }
+
+        function closeModal(e) {
+            if (!e || e.target.id === 'modal-overlay' || e.target.classList.contains('modal-close')) {
+                document.getElementById('modal-overlay').classList.remove('active');
+                activeProductId = null;
+            }
         }
 
         function updateQty(id, change) {
