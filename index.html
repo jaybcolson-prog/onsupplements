@@ -17,7 +17,7 @@
             background-color: #0d0d0d;
             color: #f5f5f5;
             line-height: 1.5;
-            padding: 15px 12px 170px 12px; /* Margen extra abajo para no pisar el contenido */
+            padding: 15px 12px 170px 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -97,6 +97,11 @@
             align-items: center;
             cursor: pointer;
             transition: border-color 0.2s, background-color 0.2s;
+            position: relative;
+        }
+
+        .product-card.out-of-stock {
+            opacity: 0.5;
         }
 
         .product-card:active {
@@ -162,6 +167,13 @@
             color: #00FF66;
         }
 
+        .stock-tag {
+            font-size: 10px;
+            color: #888;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
         /* Controls */
         .quantity-controls {
             display: flex;
@@ -187,7 +199,12 @@
             user-select: none;
         }
 
-        .btn-qty:active {
+        .btn-qty:disabled {
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        .btn-qty:not(:disabled):active {
             background: #333;
         }
 
@@ -213,15 +230,21 @@
             transition: transform 0.1s, background-color 0.2s;
         }
 
-        .btn-add:active {
+        .btn-add:disabled {
+            background-color: #282828;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .btn-add:not(:disabled):active {
             transform: scale(0.96);
             background-color: #00cc52;
         }
 
-        /* Cart Floating Bar - ELEVADO PARA QUE NO LO TAPE NETLIFY */
+        /* Cart Floating Bar - ELEVADO */
         .cart-bar {
             position: fixed;
-            bottom: 50px; /* Eleva la barra para despejar la insignia de Netlify */
+            bottom: 50px;
             left: 0;
             right: 0;
             background: #141414;
@@ -453,7 +476,10 @@
             <div class="modal-title" id="modal-title"></div>
             <div class="modal-desc" id="modal-desc"></div>
             <div class="modal-bottom">
-                <div class="modal-price" id="modal-price"></div>
+                <div>
+                    <div class="modal-price" id="modal-price"></div>
+                    <div class="stock-tag" id="modal-stock-text"></div>
+                </div>
                 <div id="modal-controls"></div>
             </div>
         </div>
@@ -469,7 +495,8 @@
                 category: "suplementos",
                 name: "Proteína ENA True Made (Vanilla)",
                 price: 53250,
-                desc: "Sachet de 453g sabor Vanilla Ice Cream. Proteína concentrada y aislada de suero de leche de máxima pureza para promover la recuperación muscular post-entrenamiento.",
+                stock: 4,
+                desc: "Sachet de 453g sabor Vanilla Ice Cream. Proteína concentrada y aislada de suero de leche de máxima pureza.",
                 image: "proteina.webp.webp"
             },
             {
@@ -477,7 +504,8 @@
                 category: "suplementos",
                 name: "Gomitas de Creatina Gomex",
                 price: 45000,
-                desc: "Frasco x120 gomitas sabor Blueberry. Forma innovadora, rica y muy práctica para consumir tu dosis diaria de creatina monohidratada sin necesidad de mezclar con agua.",
+                stock: 5,
+                desc: "Frasco x120 gomitas sabor Blueberry. Forma práctica y rica de consumir creatina monohidratada.",
                 image: "gomex.webp.webp"
             },
 
@@ -485,66 +513,83 @@
             {
                 id: 3,
                 category: "accesorios",
-                name: "Medias de Agarre (Grip Socks)",
+                name: "Medias de Agarre (Grip Socks) - Negras",
                 price: 13000,
-                desc: "Medias antideslizantes de alto rendimiento para fútbol, rugby y entrenamiento. Almohadillas de silicona que evitan el deslizamiento del pie dentro del calzado.",
+                stock: 10,
+                desc: "Medias antideslizantes negras de alto rendimiento para fútbol, rugby y entrenamiento.",
                 image: "medias.webp.webp"
             },
             {
                 id: 4,
                 category: "accesorios",
-                name: "Cinta de Tela Deportiva (38mm)",
-                price: 11500,
-                desc: "Cinta de tela inelástica rígida deportiva (38mm). Ideal para vendajes funcionales y protección de articulaciones en deportes de alto impacto.",
-                image: "cinta-deportiva.webp.webp"
+                name: "Medias de Agarre (Grip Socks) - Blancas",
+                price: 13000,
+                stock: 10,
+                desc: "Medias antideslizantes blancas de alto rendimiento para fútbol, rugby y entrenamiento.",
+                image: "medias.webp.webp"
             },
             {
                 id: 5,
                 category: "accesorios",
-                name: "Cinta Aisladora Deportiva (PVC)",
-                price: 6000,
-                desc: "Cinta de PVC blanca flexible para sujetar canilleras, medias y reforzar vendajes exteriores sin perder movilidad.",
-                image: "cinta-pvc.webp.webp"
+                name: "Cinta de Tela Deportiva (38mm)",
+                price: 11500,
+                stock: 8,
+                desc: "Cinta de tela inelástica rígida deportiva (38mm) Sportape. Ideal para vendajes y articulaciones.",
+                image: "cinta-deportiva.webp.webp"
             },
             {
                 id: 6,
                 category: "accesorios",
+                name: "Cinta Aisladora Deportiva (PVC)",
+                price: 6000,
+                stock: 8,
+                desc: "Cinta de PVC blanca flexible para sujetar canilleras, estribos y medias sin perder movilidad.",
+                image: "cinta-pvc.webp.webp"
+            },
+            {
+                id: 7,
+                category: "accesorios",
                 name: "Venda Autoadherente Tipo Coban",
                 price: 8000,
-                desc: "Venda cohesiva negra (10cm x 4.5m). Se adhiere sobre sí misma sin necesitar clips ni pegamento, ideal para compresión y contención muscular.",
+                stock: 8,
+                desc: "Venda cohesiva negra (10cm x 4.5m) que se adhiere sobre sí misma para compresión muscular.",
                 image: "venda-coban.webp.webp"
             },
 
             // SNACKS SALUDABLES
             {
-                id: 7,
+                id: 8,
                 category: "snacks",
                 name: "Caja Barritas Crudda Brownie (10u)",
                 price: 19500,
-                desc: "Caja x10 unidades sabor Brownie. Barritas de proteína 100% vegetales, sin TACC, sin conservantes y endulzadas naturalmente.",
+                stock: 5,
+                desc: "Caja x10 unidades sabor Brownie. Barritas de proteína 100% vegetales, sin TACC y sin conservantes.",
                 image: "crudda-brownie-caja.webp.webp"
-            },
-            {
-                id: 8,
-                category: "snacks",
-                name: "Caja Barritas Crudda Avellanas (10u)",
-                price: 19500,
-                desc: "Caja x10 unidades sabor Avellanas. Snack proteico vegano, sin TACC y rico en fibra natural para tus colaciones diarias.",
-                image: "crudda-avellana-caja.webp.webp"
             },
             {
                 id: 9,
                 category: "snacks",
-                name: "Barrita Crudda Brownie (Suelta)",
-                price: 2400,
-                desc: "Barrita proteica individual sabor Brownie. Ideal para probar o llevar de snack rápido al gimnasio o entrenamiento.",
-                image: "crudda-brownie-suelta.webp.webp"
+                name: "Caja Barritas Crudda Avellanas (10u)",
+                price: 19500,
+                stock: 5,
+                desc: "Caja x10 unidades sabor Avellanas. Snack proteico vegano, sin TACC y rico en fibra natural.",
+                image: "crudda-avellana-caja.webp.webp"
             },
             {
                 id: 10,
                 category: "snacks",
+                name: "Barrita Crudda Brownie (Suelta)",
+                price: 2400,
+                stock: 50,
+                desc: "Barrita proteica individual sabor Brownie. Ideal para probar o llevar de snack rápido.",
+                image: "crudda-brownie-suelta.webp.webp"
+            },
+            {
+                id: 11,
+                category: "snacks",
                 name: "Barrita Crudda Avellana (Suelta)",
                 price: 2400,
+                stock: 50,
                 desc: "Barrita proteica individual sabor Avellana. Snack rápido, proteico y saludable sin TACC.",
                 image: "crudda-avellana-suelta.webp.webp"
             }
@@ -564,9 +609,11 @@
 
             products.forEach(p => {
                 const qty = cart[p.id] || 0;
-                
+                const isOutOfStock = p.stock <= 0;
+                const reachedMax = qty >= p.stock;
+
                 const card = document.createElement('div');
-                card.className = 'product-card';
+                card.className = `product-card ${isOutOfStock ? 'out-of-stock' : ''}`;
                 card.onclick = () => openModal(p.id);
                 
                 card.innerHTML = `
@@ -577,15 +624,20 @@
                         <div class="product-title">${p.name}</div>
                         <div class="product-desc">${p.desc}</div>
                         <div class="product-bottom">
-                            <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+                            <div>
+                                <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+                                <div class="stock-tag">${isOutOfStock ? '⚠️ Sin Stock' : 'Stock: ' + (p.stock - qty)}</div>
+                            </div>
                             <div onclick="event.stopPropagation()">
-                                ${qty === 0 ? `
+                                ${isOutOfStock ? `
+                                    <button class="btn-add" disabled>Sin Stock</button>
+                                ` : qty === 0 ? `
                                     <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
                                 ` : `
                                     <div class="quantity-controls">
                                         <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
                                         <span class="qty-number">${qty}</span>
-                                        <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
+                                        <button class="btn-qty" onclick="updateQty(${p.id}, 1)" ${reachedMax ? 'disabled' : ''}>+</button>
                                     </div>
                                 `}
                             </div>
@@ -612,10 +664,13 @@
             if (!p) return;
 
             activeProductId = id;
+            const qty = cart[id] || 0;
+
             document.getElementById('modal-img').src = p.image;
             document.getElementById('modal-title').textContent = p.name;
             document.getElementById('modal-desc').textContent = p.desc;
             document.getElementById('modal-price').textContent = `$${p.price.toLocaleString('es-AR')}`;
+            document.getElementById('modal-stock-text').textContent = p.stock <= 0 ? '⚠️ Producto Sin Stock' : `Stock disponible: ${p.stock - qty}`;
 
             renderModalControls(id);
             document.getElementById('modal-overlay').classList.add('active');
@@ -623,16 +678,20 @@
 
         function renderModalControls(id) {
             const controlsContainer = document.getElementById('modal-controls');
+            const p = products.find(prod => prod.id === id);
             const qty = cart[id] || 0;
+            const reachedMax = qty >= p.stock;
 
-            if (qty === 0) {
+            if (p.stock <= 0) {
+                controlsContainer.innerHTML = `<button class="btn-add" style="padding: 10px 20px; font-size: 14px;" disabled>Agotado</button>`;
+            } else if (qty === 0) {
                 controlsContainer.innerHTML = `<button class="btn-add" style="padding: 10px 20px; font-size: 14px;" onclick="updateQty(${id}, 1)">Agregar al Carrito</button>`;
             } else {
                 controlsContainer.innerHTML = `
                     <div class="quantity-controls" style="padding: 2px;">
                         <button class="btn-qty" style="width: 40px; height: 40px;" onclick="updateQty(${id}, -1)">-</button>
                         <span class="qty-number" style="width: 32px; font-size: 16px;">${qty}</span>
-                        <button class="btn-qty" style="width: 40px; height: 40px;" onclick="updateQty(${id}, 1)">+</button>
+                        <button class="btn-qty" style="width: 40px; height: 40px;" onclick="updateQty(${id}, 1)" ${reachedMax ? 'disabled' : ''}>+</button>
                     </div>
                 `;
             }
@@ -646,9 +705,17 @@
         }
 
         function updateQty(id, change) {
+            const p = products.find(prod => prod.id === id);
             const currentQty = cart[id] || 0;
             const newQty = currentQty + change;
-            if (newQty <= 0) { delete cart[id]; } else { cart[id] = newQty; }
+
+            if (newQty > p.stock) return;
+
+            if (newQty <= 0) { 
+                delete cart[id]; 
+            } else { 
+                cart[id] = newQty; 
+            }
             renderProducts();
             updateCartBar();
         }
