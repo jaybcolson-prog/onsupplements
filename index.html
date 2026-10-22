@@ -33,7 +33,7 @@
             text-align: center;
             padding: 15px 0 20px 0;
             border-bottom: 1px solid #222;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .logo {
@@ -56,19 +56,23 @@
             margin-top: 4px;
         }
 
-        .section-title {
+        .category-section {
+            margin-bottom: 28px;
+        }
+
+        .category-title {
             font-size: 16px;
             font-weight: 800;
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .section-title::before {
+        .category-title::before {
             content: '';
             display: inline-block;
             width: 4px;
@@ -86,12 +90,11 @@
         .product-card {
             background: #161616;
             border-radius: 14px;
-            padding: 16px;
+            padding: 14px;
             border: 1px solid #262626;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 12px;
+            gap: 14px;
+            align-items: center;
             transition: border-color 0.2s;
         }
 
@@ -99,22 +102,45 @@
             border-color: #00FF66;
         }
 
-        .product-info {
+        .product-img-container {
+            width: 85px;
+            height: 85px;
+            flex-shrink: 0;
+            background-color: #202020;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .product-content {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            justify-content: space-between;
+            width: 100%;
+            gap: 6px;
         }
 
         .product-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #ffffff;
+            line-height: 1.2;
         }
 
         .product-desc {
-            font-size: 12.5px;
+            font-size: 12px;
             color: #999;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .product-bottom {
@@ -125,7 +151,7 @@
         }
 
         .product-price {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
             color: #00FF66;
         }
@@ -146,8 +172,8 @@
             color: #00FF66;
             font-size: 18px;
             font-weight: 800;
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -160,10 +186,10 @@
         }
 
         .qty-number {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: #fff;
-            width: 28px;
+            width: 24px;
             text-align: center;
         }
 
@@ -171,10 +197,10 @@
             background-color: #00FF66;
             color: #000;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 8px;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             cursor: pointer;
             letter-spacing: 0.5px;
@@ -279,10 +305,22 @@
             <div class="subtitle">Nutrición & Equipamiento Deportivo</div>
         </header>
 
-        <div class="section-title">Catálogo de Productos</div>
+        <!-- CATEGORÍA 1: SUPLEMENTOS -->
+        <div class="category-section">
+            <div class="category-title">Suplementos</div>
+            <div class="products-grid" id="grid-suplementos"></div>
+        </div>
 
-        <div class="products-grid" id="products-container">
-            <!-- Los productos se cargan dinámicamente -->
+        <!-- CATEGORÍA 2: ACCESORIOS DEPORTIVOS -->
+        <div class="category-section">
+            <div class="category-title">Accesorios Deportivos</div>
+            <div class="products-grid" id="grid-accesorios"></div>
+        </div>
+
+        <!-- CATEGORÍA 3: SNACKS SALUDABLES -->
+        <div class="category-section">
+            <div class="category-title">Snacks Saludables</div>
+            <div class="products-grid" id="grid-snacks"></div>
         </div>
 
         <footer>
@@ -304,74 +342,106 @@
     </div>
 
     <script>
-        // Configuración de WhatsApp (Número del usuario)
         const PHONE_NUMBER = "5491160236142";
 
-        // Lista oficial de productos
         const products = [
+            // SUPLEMENTOS
             {
                 id: 1,
+                category: "suplementos",
                 name: "Proteína ENA True Made (Vanilla)",
                 price: 53250,
-                desc: "Sachet de 453g sabor Vanilla Ice Cream. Proteína de alta calidad para recuperación muscular."
+                desc: "Sachet de 453g sabor Vanilla Ice Cream.",
+                image: "proteina.webp.webp"
             },
             {
                 id: 2,
+                category: "suplementos",
                 name: "Gomitas de Creatina Gomex",
                 price: 45000,
-                desc: "Gomitas con sabor Blueberry. La forma más fácil y rica de consumir tu creatina diaria."
+                desc: "Sabor Blueberry (120u). Dosis práctica diaria.",
+                image: "gomex.webp.webp"
             },
+
+            // ACCESORIOS DEPORTIVOS
             {
                 id: 3,
+                category: "accesorios",
                 name: "Medias de Agarre (Grip Socks)",
                 price: 13000,
-                desc: "Medias antideslizantes de alto rendimiento para fútbol, rugby y entrenamiento."
+                desc: "Antideslizantes de alto rendimiento.",
+                image: "medias.webp.webp"
             },
             {
                 id: 4,
+                category: "accesorios",
                 name: "Cinta de Tela Deportiva (38mm)",
                 price: 11500,
-                desc: "Cinta rígida deportiva para vendajes y fijación estricta de articulaciones."
+                desc: "Rígida para vendajes y articulaciones.",
+                image: "cinta-deportiva.webp.webp"
             },
             {
                 id: 5,
+                category: "accesorios",
                 name: "Cinta Aisladora Deportiva (PVC)",
                 price: 6000,
-                desc: "Cinta de PVC blanca para estribos y refuerzo exterior de vendajes."
+                desc: "PVC blanca para estribos y refuerzos.",
+                image: "cinta-pvc.webp.webp"
             },
             {
                 id: 6,
+                category: "accesorios",
                 name: "Venda Autoadherente Tipo Coban",
                 price: 8000,
-                desc: "Venda cohesiva negra (10cm x 4.5m). Se adhiere sobre sí misma sin pegamento."
+                desc: "Cohesiva negra (10cm x 4.5m) autoadherente.",
+                image: "venda-coban.webp.webp"
             },
+
+            // SNACKS SALUDABLES
             {
                 id: 7,
+                category: "snacks",
                 name: "Caja Barritas Crudda Brownie (10u)",
                 price: 19500,
-                desc: "Caja x10 unidades sabor Brownie. Proteicas, veganas y sin TACC."
+                desc: "Caja x10 unidades sabor Brownie.",
+                image: "crudda-brownie-caja.webp.webp"
             },
             {
                 id: 8,
+                category: "snacks",
                 name: "Caja Barritas Crudda Avellanas (10u)",
                 price: 19500,
-                desc: "Caja x10 unidades sabor Avellanas. Proteicas, veganas y sin TACC."
+                desc: "Caja x10 unidades sabor Avellanas.",
+                image: "crudda-avellana-caja.webp.webp"
             },
             {
                 id: 9,
-                name: "Barrita Crudda (Suelta)",
+                category: "snacks",
+                name: "Barrita Crudda Brownie (Suelta)",
                 price: 2400,
-                desc: "Barrita proteica individual (Brownie / Avellana según disponibilidad)."
+                desc: "Barrita proteica individual sabor Brownie.",
+                image: "crudda-brownie-suelta.webp.webp"
+            },
+            {
+                id: 10,
+                category: "snacks",
+                name: "Barrita Crudda Avellana (Suelta)",
+                price: 2400,
+                desc: "Barrita proteica individual sabor Avellana.",
+                image: "crudda-avellana-suelta.webp.webp"
             }
         ];
 
-        // Estado del carrito { id: cantidad }
         const cart = {};
 
-        // Renderizar la lista de productos
         function renderProducts() {
-            const container = document.getElementById('products-container');
-            container.innerHTML = '';
+            const gridSuplementos = document.getElementById('grid-suplementos');
+            const gridAccesorios = document.getElementById('grid-accesorios');
+            const gridSnacks = document.getElementById('grid-snacks');
+
+            gridSuplementos.innerHTML = '';
+            gridAccesorios.innerHTML = '';
+            gridSnacks.innerHTML = '';
 
             products.forEach(p => {
                 const qty = cart[p.id] || 0;
@@ -379,70 +449,61 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <div class="product-info">
+                    <div class="product-img-container">
+                        <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/85/202020/00FF66?text=Foto';">
+                    </div>
+                    <div class="product-content">
                         <div class="product-title">${p.name}</div>
                         <div class="product-desc">${p.desc}</div>
-                    </div>
-                    <div class="product-bottom">
-                        <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
-                        ${qty === 0 ? `
-                            <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
-                        ` : `
-                            <div class="quantity-controls">
-                                <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
-                                <span class="qty-number">${qty}</span>
-                                <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
-                            </div>
-                        `}
+                        <div class="product-bottom">
+                            <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+                            ${qty === 0 ? `
+                                <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
+                            ` : `
+                                <div class="quantity-controls">
+                                    <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
+                                    <span class="qty-number">${qty}</span>
+                                    <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
+                                </div>
+                            `}
+                        </div>
                     </div>
                 `;
-                container.appendChild(card);
+
+                if (p.category === "suplementos") {
+                    gridSuplementos.appendChild(card);
+                } else if (p.category === "accesorios") {
+                    gridAccesorios.appendChild(card);
+                } else if (p.category === "snacks") {
+                    gridSnacks.appendChild(card);
+                }
             });
         }
 
-        // Actualizar cantidades en el carrito
         function updateQty(id, change) {
             const currentQty = cart[id] || 0;
             const newQty = currentQty + change;
-
-            if (newQty <= 0) {
-                delete cart[id];
-            } else {
-                cart[id] = newQty;
-            }
-
+            if (newQty <= 0) { delete cart[id]; } else { cart[id] = newQty; }
             renderProducts();
             updateCartBar();
         }
 
-        // Actualizar la barra inferior con totales
         function updateCartBar() {
             let totalItems = 0;
             let totalPrice = 0;
-
             Object.keys(cart).forEach(id => {
                 const qty = cart[id];
                 const product = products.find(p => p.id == id);
-                if (product) {
-                    totalItems += qty;
-                    totalPrice += product.price * qty;
-                }
+                if (product) { totalItems += qty; totalPrice += product.price * qty; }
             });
-
-            const countEl = document.getElementById('cart-count');
-            const totalEl = document.getElementById('cart-total');
-            const btnEl = document.getElementById('btn-whatsapp');
-
-            countEl.textContent = `${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`;
-            totalEl.textContent = `$${totalPrice.toLocaleString('es-AR')}`;
-            btnEl.disabled = totalItems === 0;
+            document.getElementById('cart-count').textContent = `${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`;
+            document.getElementById('cart-total').textContent = `$${totalPrice.toLocaleString('es-AR')}`;
+            document.getElementById('btn-whatsapp').disabled = totalItems === 0;
         }
 
-        // Generar enlace de WhatsApp con el resumen
         function sendWhatsAppOrder() {
             let itemsText = "";
             let totalPrice = 0;
-
             Object.keys(cart).forEach(id => {
                 const qty = cart[id];
                 const product = products.find(p => p.id == id);
@@ -452,21 +513,15 @@
                     itemsText += `• ${qty}x ${product.name} - $${subtotal.toLocaleString('es-AR')}\n`;
                 }
             });
-
             if (itemsText === "") return;
-
             let message = `¡Hola! Quisiera hacer el siguiente pedido en On Supplements:\n\n`;
             message += itemsText;
             message += `\n*TOTAL: $${totalPrice.toLocaleString('es-AR')}*`;
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`, '_blank');
+            window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        // Inicializar
         renderProducts();
         updateCartBar();
     </script>
-
 </body>
 </html>
