@@ -6,10 +6,10 @@
     <title>On Supplements - Catálogo</title>
     <style>
         :root {
-            --bg: #0b0b0b;
+            --bg: #0a0a0a;
             --card-bg: #141414;
             --accent: #e50914;
-            --text: #f1f1f1;
+            --text: #f5f5f5;
             --text-secondary: #999999;
             --border: #222222;
         }
@@ -28,70 +28,120 @@
         }
         header h1 {
             margin: 0;
-            font-size: 2.2rem;
-            letter-spacing: 2px;
+            font-size: 2rem;
+            letter-spacing: 3px;
             color: #ffffff;
             font-weight: 800;
         }
         header p {
             margin: 0.5rem 0 0;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 2.5rem 1rem;
+            padding: 2rem 1rem;
         }
         h2.section-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #ffffff;
             border-left: 3px solid var(--accent);
             padding-left: 0.75rem;
-            margin-top: 3rem;
+            margin-top: 2.5rem;
             margin-bottom: 1.5rem;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 1.5rem;
         }
         .card {
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            padding: 1.5rem;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, transform 0.2s;
         }
         .card:hover {
-            border-color: #444;
+            border-color: #3a3a3a;
         }
         .card.combo {
-            border: 1px solid #441012;
-            background: linear-gradient(145deg, #141414, #1a0f10);
+            border: 1px solid #3d1214;
+            background: linear-gradient(160deg, #141414 60%, #1c0d0e 100%);
         }
         .card.out-of-stock {
-            opacity: 0.5;
+            opacity: 0.55;
+        }
+        /* Contenedor de imagen individual */
+        .img-single {
+            width: 100%;
+            height: 200px;
+            background-color: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border);
+        }
+        .img-single img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        /* Contenedor de imágenes múltiples para combos */
+        .img-combo-grid {
+            width: 100%;
+            height: 200px;
+            background-color: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 1rem;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border);
+        }
+        .img-combo-grid img {
+            flex: 1;
+            min-width: 0;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .card-content {
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
         }
         .card h3 {
-            margin-top: 0;
+            margin: 0;
             font-size: 1.05rem;
             color: #ffffff;
-            line-height: 1.4;
+            line-height: 1.35;
         }
         .badge {
             display: inline-block;
+            align-self: flex-start;
             font-size: 0.7rem;
-            font-weight: bold;
-            padding: 0.2rem 0.5rem;
+            font-weight: 700;
+            padding: 0.25rem 0.55rem;
             border-radius: 4px;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        .badge-promo {
+            background-color: rgba(229, 9, 20, 0.15);
+            color: #ff4d57;
+            border: 1px solid rgba(229, 9, 20, 0.3);
         }
         .badge-stock {
             background-color: rgba(255, 193, 7, 0.15);
@@ -99,16 +149,16 @@
             border: 1px solid rgba(255, 193, 7, 0.3);
         }
         .badge-nostock {
-            background-color: rgba(220, 53, 69, 0.15);
-            color: #dc3545;
-            border: 1px solid rgba(220, 53, 69, 0.3);
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #888888;
+            border: 1px solid #333333;
         }
         .price-box {
-            margin: 1rem 0;
+            margin: 0.9rem 0;
         }
         .price {
-            font-size: 1.25rem;
-            font-weight: bold;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: #ffffff;
         }
         .old-price {
@@ -120,7 +170,7 @@
         .desc {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.3rem;
             line-height: 1.4;
         }
         .btn {
@@ -129,23 +179,23 @@
             background-color: #25d366;
             color: #ffffff;
             text-decoration: none;
-            padding: 0.7rem;
+            padding: 0.75rem;
             border-radius: 6px;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 0.9rem;
             transition: background-color 0.2s;
         }
         .btn:hover {
-            background-color: #20ba5a;
+            background-color: #1fb858;
         }
         .btn.disabled {
-            background-color: #333333;
-            color: #777777;
+            background-color: #262626;
+            color: #666666;
             pointer-events: none;
         }
         footer {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 2.5rem 1rem;
             color: var(--text-secondary);
             font-size: 0.8rem;
             border-top: 1px solid var(--border);
@@ -163,79 +213,124 @@
     <div class="container">
 
         <!-- SECCIÓN DE COMBOS Y PROMOS -->
-        <h2 class="section-title">⚡ Combos & Promos</h2>
+        <h2 class="section-title">Combos & Promos</h2>
         <div class="grid">
             
+            <!-- Combo 1 -->
             <div class="card combo">
-                <div>
-                    <span class="badge badge-stock">Promo Combo</span>
-                    <h3>1 Par de Medias de Agarre + 1 Frasco de Gomitas Gomex</h3>
-                    <div class="price-box">
-                        <span class="price">$44.900</span> <span class="old-price">$51.900</span>
-                    </div>
-                    <div class="desc">Llevate el complemento ideal para la cancha junto con tus gomitas con descuento aplicado.</div>
+                <div class="img-combo-grid">
+                    <img src="medias.webp.webp" alt="Medias de Agarre">
+                    <img src="gomex.webp.webp" alt="Gomitas Gomex">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20de%20Agarre%20+%20Gomitas%20Gomex%20por%20$44.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-promo">Promo Combo</span>
+                        <h3>1 Par de Medias de Agarre + 1 Frasco de Gomitas Gomex</h3>
+                        <div class="price-box">
+                            <span class="price">$44.900</span> <span class="old-price">$51.900</span>
+                        </div>
+                        <div class="desc">Complemento ideal para la cancha junto con tus gomitas con descuento aplicado.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20de%20Agarre%20+%20Gomitas%20Gomex%20por%20$44.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
+            <!-- Combo 2 -->
             <div class="card combo">
-                <div>
-                    <span class="badge badge-stock">Promo Combo</span>
-                    <h3>1 Par de Medias de Agarre + 1 Venda Coban + 1 Cinta de Tela</h3>
-                    <div class="price-box">
-                        <span class="price">$27.500</span> <span class="old-price">$31.300</span>
-                    </div>
-                    <div class="desc">Kit completo de prevención y sujeción para partidos de fútbol y rugby.</div>
+                <div class="img-combo-grid">
+                    <img src="medias.webp.webp" alt="Medias de Agarre">
+                    <img src="venda-coban.webp.webp" alt="Venda Coban">
+                    <img src="cinta-deportiva.webp.webp" alt="Cinta de Tela">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Venda%20Coban%20+%20Cinta%20de%20Tela%20por%20$27.500" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-promo">Promo Combo</span>
+                        <h3>1 Par de Medias de Agarre + 1 Venda Coban + 1 Cinta de Tela</h3>
+                        <div class="price-box">
+                            <span class="price">$27.500</span> <span class="old-price">$31.300</span>
+                        </div>
+                        <div class="desc">Kit completo de prevención y sujeción para partidos de fútbol y rugby.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Venda%20Coban%20+%20Cinta%20de%20Tela%20por%20$27.500" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
+            <!-- Combo 3 -->
             <div class="card combo">
-                <div>
-                    <span class="badge badge-stock">Promo Combo</span>
-                    <h3>1 Par de Medias de Agarre + 1 Cinta de Tela + 1 Cinta PVC Aisladora</h3>
-                    <div class="price-box">
-                        <span class="price">$24.900</span> <span class="old-price">$28.200</span>
-                    </div>
-                    <div class="desc">Pack esencial de fin de semana para asegurar canilleras y tobillos.</div>
+                <div class="img-combo-grid">
+                    <img src="medias.webp.webp" alt="Medias de Agarre">
+                    <img src="cinta-deportiva.webp.webp" alt="Cinta de Tela">
+                    <img src="cinta-pvc.webp.webp" alt="Cinta PVC">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Cinta%20Tela%20+%20Cinta%20PVC%20por%20$24.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-promo">Promo Combo</span>
+                        <h3>1 Par de Medias de Agarre + 1 Cinta de Tela + 1 Cinta PVC Aisladora</h3>
+                        <div class="price-box">
+                            <span class="price">$24.900</span> <span class="old-price">$28.200</span>
+                        </div>
+                        <div class="desc">Pack esencial de fin de semana para asegurar canilleras y tobillos.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Cinta%20Tela%20+%20Cinta%20PVC%20por%20$24.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
+            <!-- Combo 4 -->
             <div class="card combo">
-                <div>
-                    <span class="badge badge-stock">Promo Combo</span>
-                    <h3>1 Par de Medias de Agarre + 1 Cinta de Tela (38mm)</h3>
-                    <div class="price-box">
-                        <span class="price">$21.500</span> <span class="old-price">$23.300</span>
-                    </div>
-                    <div class="desc">El clásico de siempre para salir a jugar firme a la cancha.</div>
+                <div class="img-combo-grid">
+                    <img src="medias.webp.webp" alt="Medias de Agarre">
+                    <img src="cinta-deportiva.webp.webp" alt="Cinta de Tela">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Cinta%20de%20Tela%20por%20$21.500" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-promo">Promo Combo</span>
+                        <h3>1 Par de Medias de Agarre + 1 Cinta de Tela (38mm)</h3>
+                        <div class="price-box">
+                            <span class="price">$21.500</span> <span class="old-price">$23.300</span>
+                        </div>
+                        <div class="desc">El clásico de siempre para salir a jugar firme a la cancha.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Cinta%20de%20Tela%20por%20$21.500" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
+            <!-- Combo 5 -->
             <div class="card combo">
-                <div>
-                    <span class="badge badge-stock">Promo Combo</span>
-                    <h3>1 Proteína ENA True Made (453g) + 1 Gomitas Gomex + 1 Cinta de Tela</h3>
-                    <div class="price-box">
-                        <span class="price">$95.000</span> <span class="old-price">$103.200</span>
-                    </div>
-                    <div class="desc">Pack masivo de suplementación y accesorios para rendimiento total.</div>
+                <div class="img-combo-grid">
+                    <img src="proteina.webp.webp" alt="Proteína ENA">
+                    <img src="gomex.webp.webp" alt="Gomitas Gomex">
+                    <img src="cinta-deportiva.webp.webp" alt="Cinta de Tela">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Proteína%20ENA%20+%20Gomex%20+%20Cinta%20por%20$95.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-promo">Promo Combo</span>
+                        <h3>1 Proteína ENA True Made (453g) + 1 Gomitas Gomex + 1 Cinta de Tela</h3>
+                        <div class="price-box">
+                            <span class="price">$95.000</span> <span class="old-price">$103.200</span>
+                        </div>
+                        <div class="desc">Pack completo de suplementación y accesorios para rendimiento total.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Proteína%20ENA%20+%20Gomex%20+%20Cinta%20por%20$95.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
+            <!-- Combo 6 -->
             <div class="card combo">
-                <div>
-                    <span class="badge badge-stock">Sabor Avellana (Últimas 4 cajas)</span>
-                    <h3>1 Proteína ENA True Made (453g) + 1 Caja de Barritas Crudda Avellana (10u)</h3>
-                    <div class="price-box">
-                        <span class="price">$67.900</span> <span class="old-price">$72.000</span>
-                    </div>
-                    <div class="desc">Proteína en polvo para recuperación muscular + caja de barritas sabor Avellana.</div>
+                <div class="img-combo-grid">
+                    <img src="proteina.webp.webp" alt="Proteína ENA">
+                    <img src="crudda-avellana-caja.webp.webp" alt="Caja Barritas Crudda Avellana">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Proteína%20ENA%20+%20Caja%20de%20Barritas%20Avellana%20por%20$67.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-stock">Avellana · Últimas 4 cajas</span>
+                        <h3>1 Proteína ENA True Made (453g) + 1 Caja de Barritas Crudda Avellana (10u)</h3>
+                        <div class="price-box">
+                            <span class="price">$67.900</span> <span class="old-price">$72.000</span>
+                        </div>
+                        <div class="desc">Proteína en polvo para recuperación muscular + caja de barritas sabor Avellana.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Proteína%20ENA%20+%20Caja%20de%20Barritas%20Avellana%20por%20$67.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
         </div>
@@ -245,93 +340,133 @@
         <div class="grid">
             
             <div class="card">
-                <div>
-                    <h3>Proteína ENA True Made (453g)</h3>
-                    <div class="price-box">
-                        <span class="price">$52.000</span>
-                    </div>
-                    <div class="desc">Suplemento proteico de alta calidad para recuperación y desarrollo muscular.</div>
+                <div class="img-single">
+                    <img src="proteina.webp.webp" alt="Proteína ENA True Made">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Proteína%20ENA%20por%20$52.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <h3>Proteína ENA True Made (453g)</h3>
+                        <div class="price-box">
+                            <span class="price">$52.000</span>
+                        </div>
+                        <div class="desc">Suplemento proteico de alta calidad para recuperación y desarrollo muscular.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Proteína%20ENA%20por%20$52.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card">
-                <div>
-                    <h3>Frasco de Gomitas Gomex</h3>
-                    <div class="price-box">
-                        <span class="price">$39.900</span>
-                    </div>
-                    <div class="desc">Suplemento en formato de gomitas masticables.</div>
+                <div class="img-single">
+                    <img src="gomex.webp.webp" alt="Frasco de Gomitas Gomex">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20las%20Gomitas%20Gomex%20por%20$39.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <h3>Frasco de Gomitas Gomex</h3>
+                        <div class="price-box">
+                            <span class="price">$39.900</span>
+                        </div>
+                        <div class="desc">Suplemento en formato de gomitas masticables.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20las%20Gomitas%20Gomex%20por%20$39.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card">
-                <div>
-                    <h3>Par de Medias de Agarre</h3>
-                    <div class="price-box">
-                        <span class="price">$12.000</span>
-                    </div>
-                    <div class="desc">Antideslizantes para calzado deportivo de fútbol y rugby.</div>
+                <div class="img-single">
+                    <img src="medias.webp.webp" alt="Par de Medias de Agarre">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20las%20Medias%20de%20Agarre%20por%20$12.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <h3>Par de Medias de Agarre</h3>
+                        <div class="price-box">
+                            <span class="price">$12.000</span>
+                        </div>
+                        <div class="desc">Antideslizantes para calzado deportivo de fútbol y rugby.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20las%20Medias%20de%20Agarre%20por%20$12.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card">
-                <div>
-                    <h3>Cinta de Tela Deportiva (38mm)</h3>
-                    <div class="price-box">
-                        <span class="price">$11.300</span>
-                    </div>
-                    <div class="desc">Cinta adhesiva de alta resistencia para vendajes y sujeción.</div>
+                <div class="img-single">
+                    <img src="cinta-deportiva.webp.webp" alt="Cinta de Tela Deportiva">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Cinta%20de%20Tela%20por%20$11.300" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <h3>Cinta de Tela Deportiva (38mm)</h3>
+                        <div class="price-box">
+                            <span class="price">$11.300</span>
+                        </div>
+                        <div class="desc">Cinta adhesiva de alta resistencia para vendajes y sujeción.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Cinta%20de%20Tela%20por%20$11.300" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card">
-                <div>
-                    <h3>Venda Autoadherente Coban</h3>
-                    <div class="price-box">
-                        <span class="price">$8.000</span>
-                    </div>
-                    <div class="desc">Venda elástica cohesiva para soporte articular y sujeción de canilleras.</div>
+                <div class="img-single">
+                    <img src="venda-coban.webp.webp" alt="Venda Autoadherente Coban">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Venda%20Coban%20por%20$8.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <h3>Venda Autoadherente Coban</h3>
+                        <div class="price-box">
+                            <span class="price">$8.000</span>
+                        </div>
+                        <div class="desc">Venda elástica cohesiva para soporte articular y sujeción de canilleras.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Venda%20Coban%20por%20$8.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card">
-                <div>
-                    <h3>Cinta PVC Aisladora</h3>
-                    <div class="price-box">
-                        <span class="price">$4.900</span>
-                    </div>
-                    <div class="desc">Cinta plástica multiuso para fijación de medias y polainas.</div>
+                <div class="img-single">
+                    <img src="cinta-pvc.webp.webp" alt="Cinta PVC Aisladora">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Cinta%20PVC%20por%20$4.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <h3>Cinta PVC Aisladora</h3>
+                        <div class="price-box">
+                            <span class="price">$4.900</span>
+                        </div>
+                        <div class="desc">Cinta plástica multiuso para fijación de medias y polainas.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Cinta%20PVC%20por%20$4.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card">
-                <div>
-                    <span class="badge badge-stock">Quedan 4 cajas en stock</span>
-                    <h3>Caja de Barritas Crudda - Sabor Avellana (10u)</h3>
-                    <div class="price-box">
-                        <span class="price">$20.000</span>
-                    </div>
-                    <div class="desc">Snack energético y proteico sabor Avellana en caja x10 unidades.</div>
+                <div class="img-single">
+                    <img src="crudda-avellana-caja.webp.webp" alt="Caja Barritas Crudda Avellana">
                 </div>
-                <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Caja%20de%20Barritas%20Crudda%20Avellana%20por%20$20.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-stock">Quedan 4 cajas en stock</span>
+                        <h3>Caja de Barritas Crudda - Sabor Avellana (10u)</h3>
+                        <div class="price-box">
+                            <span class="price">$20.000</span>
+                        </div>
+                        <div class="desc">Snack energético y proteico sabor Avellana en caja x10 unidades.</div>
+                    </div>
+                    <a href="https://wa.me/5491171534080?text=Hola!%20Quiero%20comprar%20la%20Caja%20de%20Barritas%20Crudda%20Avellana%20por%20$20.000" class="btn" target="_blank">Pedir por WhatsApp</a>
+                </div>
             </div>
 
             <div class="card out-of-stock">
-                <div>
-                    <span class="badge badge-nostock">Sin Stock</span>
-                    <h3>Caja de Barritas Crudda - Sabor Brownie (10u)</h3>
-                    <div class="price-box">
-                        <span class="price" style="color: #666;">$20.000</span>
-                    </div>
-                    <div class="desc">Agotadas temporalmente. Consultá por disponibilidad en sabor Avellana.</div>
+                <div class="img-single">
+                    <img src="crudda-brownie-caja.webp.webp" alt="Caja Barritas Crudda Brownie">
                 </div>
-                <span class="btn disabled">Sin Stock</span>
+                <div class="card-content">
+                    <div>
+                        <span class="badge badge-nostock">Sin Stock</span>
+                        <h3>Caja de Barritas Crudda - Sabor Brownie (10u)</h3>
+                        <div class="price-box">
+                            <span class="price" style="color: #666;">$20.000</span>
+                        </div>
+                        <div class="desc">Agotadas temporalmente. Consultá por disponibilidad en sabor Avellana.</div>
+                    </div>
+                    <span class="btn disabled">Sin Stock</span>
+                </div>
             </div>
 
         </div>
@@ -339,7 +474,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 On Supplements. Pagos directos y entrega local.</p>
+        <p>&copy; 2026 On Supplements · Pagos directos y entrega local.</p>
     </footer>
 
 </body>
