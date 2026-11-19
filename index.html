@@ -3,367 +3,750 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>On Supplements - Catálogo</title>
+    <title>On Supplements | Catálogo Oficial</title>
     <style>
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: #141414;
-            --accent: #00FF66;
-            --text: #f5f5f5;
-            --text-secondary: #999999;
-            --border: #222222;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
-        header {
-            background-color: #000000;
-            border-bottom: 1px solid var(--border);
-            text-align: center;
-            padding: 2.5rem 1rem;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 3px;
-            color: #ffffff;
-            font-weight: 800;
-        }
-        header h1 span {
-            color: var(--accent);
-        }
-        header p {
-            margin: 0.5rem 0 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        h2.section-title {
-            font-size: 1.3rem;
-            color: #ffffff;
-            border-left: 3px solid var(--accent);
-            padding-left: 0.75rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 1.5rem;
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: hidden;
+
+        body {
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            line-height: 1.5;
+            padding: 15px 12px 170px 12px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
         }
-        .card.combo {
-            border: 1px solid #1c2a1c;
-            background: linear-gradient(160deg, #141414 60%, #0d1a12 100%);
-        }
-        .card.out-of-stock {
-            opacity: 0.55;
-        }
-        .img-single {
+
+        .container {
+            max-width: 480px;
             width: 100%;
-            height: 220px;
-            background-color: #111111;
+        }
+
+        header {
+            text-align: center;
+            padding: 15px 0 20px 0;
+            border-bottom: 1px solid #222;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #00FF66;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        .category-section {
+            margin-bottom: 28px;
+        }
+
+        .category-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: #00FF66;
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .product-card {
+            background: #161616;
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid #262626;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            position: relative;
+        }
+
+        .product-card.out-of-stock {
+            opacity: 0.5;
+        }
+
+        .product-card:active {
+            border-color: #00FF66;
+            background-color: #1c1c1c;
+        }
+
+        .product-img-container {
+            width: 85px;
+            height: 85px;
+            flex-shrink: 0;
+            background-color: #202020;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
-            box-sizing: border-box;
-            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            border: 1px solid #333;
         }
-        .img-single img {
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .product-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            gap: 6px;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .product-desc {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .product-price {
+            font-size: 17px;
+            font-weight: 800;
+            color: #00FF66;
+        }
+
+        .stock-tag {
+            font-size: 10px;
+            color: #888;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            background: #222;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .btn-qty {
+            background: transparent;
+            border: none;
+            color: #00FF66;
+            font-size: 18px;
+            font-weight: 800;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn-qty:disabled {
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        .btn-qty:not(:disabled):active {
+            background: #333;
+        }
+
+        .qty-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            width: 24px;
+            text-align: center;
+        }
+
+        .btn-add {
+            background-color: #00FF66;
+            color: #000;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .btn-add:disabled {
+            background-color: #282828;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .btn-add:not(:disabled):active {
+            transform: scale(0.96);
+            background-color: #00cc52;
+        }
+
+        .cart-bar {
+            position: fixed;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            background: #141414;
+            border-top: 1px solid #2a2a2a;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.8);
+        }
+
+        .cart-bar-content {
+            max-width: 480px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .cart-summary {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-count {
+            font-size: 12px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .cart-total {
+            font-size: 20px;
+            font-weight: 900;
+            color: #00FF66;
+        }
+
+        .btn-checkout {
+            background-color: #00FF66;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.25);
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn-checkout:disabled {
+            background-color: #333;
+            color: #666;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 200;
+            backdrop-filter: blur(4px);
+            padding-bottom: 60px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #181818;
+            border: 1px solid #333;
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-width: 480px;
+            max-height: 82vh;
+            overflow-y: auto;
+            padding: 22px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: slideUp 0.25s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #282828;
+            border: none;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-img-container {
+            width: 100%;
+            height: 260px;
+            background-color: #111;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            flex-shrink: 0;
+        }
+
+        .modal-img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            padding: 10px;
         }
-        .card-content {
-            padding: 1.4rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
         }
-        .card h3 {
-            margin: 0;
-            font-size: 1.05rem;
-            color: #ffffff;
-            line-height: 1.35;
-        }
-        .badge {
-            display: inline-block;
-            align-self: flex-start;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 0.25rem 0.55rem;
-            border-radius: 4px;
-            margin-bottom: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-promo {
-            background-color: rgba(0, 255, 102, 0.15);
-            color: #00FF66;
-            border: 1px solid rgba(0, 255, 102, 0.3);
-        }
-        .badge-stock {
-            background-color: rgba(255, 193, 7, 0.15);
-            color: #ffc107;
-            border: 1px solid rgba(255, 193, 7, 0.3);
-        }
-        .badge-nostock {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: #888888;
-            border: 1px solid #333333;
-        }
-        .price-box {
-            margin: 0.9rem 0;
-        }
-        .price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #ffffff;
-        }
-        .old-price {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-decoration: line-through;
-            margin-left: 0.5rem;
-        }
-        .desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.3rem;
+
+        .modal-desc {
+            font-size: 13px;
+            color: #aaa;
             line-height: 1.4;
         }
-        .btn {
-            display: block;
-            text-align: center;
-            background-color: #25d366;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: background-color 0.2s;
+
+        .modal-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            padding-top: 14px;
+            border-top: 1px solid #262626;
+            flex-shrink: 0;
         }
-        .btn:hover {
-            background-color: #1fb858;
+
+        .modal-price {
+            font-size: 22px;
+            font-weight: 900;
+            color: #00FF66;
         }
-        .btn.disabled {
-            background-color: #262626;
-            color: #666666;
-            pointer-events: none;
-        }
+
         footer {
             text-align: center;
-            padding: 2.5rem 1rem;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
+            margin-top: 35px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        footer a {
+            color: #00FF66;
+            text-decoration: none;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-<header>
-    <h1>ON SUPPLEMENTS <span>⚡️</span></h1>
-    <p>Suplementos, accesorios y equipamiento deportivo</p>
-</header>
-<div class="container">
-<h2 class="section-title">Combos & Promos</h2>
-<div class="grid">
-    <div class="card combo">
-        <div class="card-content">
-            <div>
-                <span class="badge badge-promo">Promo Combo</span>
-                <h3>1 Par de Medias de Agarre + 1 Frasco de Gomitas Gomex</h3>
-                <div class="price-box"><span class="price">$44.900</span> <span class="old-price">$51.900</span></div>
-                <div class="desc">Complemento ideal para la cancha junto con tus gomitas con descuento aplicado.</div>
+
+    <div class="container">
+        <header>
+            <div class="logo">ON SUPPLEMENTS <span>⚡️</span></div>
+            <div class="subtitle">Nutrición & Equipamiento Deportivo</div>
+        </header>
+
+        <div class="category-section">
+            <div class="category-title">Suplementos</div>
+            <div class="products-grid" id="grid-suplementos"></div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-title">Accesorios Deportivos</div>
+            <div class="products-grid" id="grid-accesorios"></div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-title">Snacks Saludables</div>
+            <div class="products-grid" id="grid-snacks"></div>
+        </div>
+
+        <footer>
+            Lomas de Zamora | Instagram: <a href="https://instagram.com/on.supplements" target="_blank">@on.supplements</a>
+        </footer>
+    </div>
+
+    <div class="cart-bar">
+        <div class="cart-bar-content">
+            <div class="cart-summary">
+                <span class="cart-count" id="cart-count">0 productos</span>
+                <span class="cart-total" id="cart-total">$0</span>
             </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20de%20Agarre%20+%20Gomitas%20Gomex%20por%20$44.900" class="btn" target="_blank">Pedir por WhatsApp</a>
+            <button class="btn-checkout" id="btn-whatsapp" onclick="sendWhatsAppOrder()" disabled>
+                Pedir por WhatsApp 🚀
+            </button>
         </div>
     </div>
-    <div class="card combo">
-        <div class="card-content">
-            <div>
-                <span class="badge badge-promo">Promo Combo</span>
-                <h3>1 Par de Medias de Agarre + 1 Venda Coban + 1 Cinta de Tela</h3>
-                <div class="price-box"><span class="price">$27.500</span> <span class="old-price">$31.300</span></div>
-                <div class="desc">Kit completo de prevención y sujeción para partidos de fútbol y rugby.</div>
+
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-img-container">
+                <img id="modal-img" src="" alt="" class="modal-img">
             </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Venda%20Coban%20+%20Cinta%20de%20Tela%20por%20$27.500" class="btn" target="_blank">Pedir por WhatsApp</a>
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-desc" id="modal-desc"></div>
+            <div class="modal-bottom">
+                <div>
+                    <div class="modal-price" id="modal-price"></div>
+                    <div class="stock-tag" id="modal-stock-text"></div>
+                </div>
+                <div id="modal-controls"></div>
+            </div>
         </div>
     </div>
-    <div class="card combo">
-        <div class="card-content">
-            <div>
-                <span class="badge badge-promo">Promo Combo</span>
-                <h3>1 Par de Medias de Agarre + 1 Cinta de Tela + 1 Cinta PVC Aisladora</h3>
-                <div class="price-box"><span class="price">$24.900</span> <span class="old-price">$28.200</span></div>
-                <div class="desc">Pack esencial de fin de semana para asegurar canilleras y tobillos.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Cinta%20Tela%20+%20Cinta%20PVC%20por%20$24.900" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card combo">
-        <div class="card-content">
-            <div>
-                <span class="badge badge-promo">Promo Combo</span>
-                <h3>1 Par de Medias de Agarre + 1 Cinta de Tela (38mm)</h3>
-                <div class="price-box"><span class="price">$21.500</span> <span class="old-price">$23.300</span></div>
-                <div class="desc">El clásico de siempre para salir a jugar firme a la cancha.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Medias%20+%20Cinta%20de%20Tela%20por%20$21.500" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card combo">
-        <div class="card-content">
-            <div>
-                <span class="badge badge-promo">Promo Combo</span>
-                <h3>1 Proteína ENA True Made (453g) + 1 Gomitas Gomex + 1 Cinta de Tela</h3>
-                <div class="price-box"><span class="price">$95.000</span> <span class="old-price">$103.200</span></div>
-                <div class="desc">Pack completo de suplementación y accesorios para rendimiento total.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Proteína%20ENA%20+%20Gomex%20+%20Cinta%20por%20$95.000" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card combo">
-        <div class="card-content">
-            <div>
-                <span class="badge badge-stock">Avellana · Últimas 4 cajas</span>
-                <h3>1 Proteína ENA True Made (453g) + 1 Caja de Barritas Crudda Avellana (10u)</h3>
-                <div class="price-box"><span class="price">$67.900</span> <span class="old-price">$72.000</span></div>
-                <div class="desc">Proteína en polvo para recuperación muscular + caja de barritas sabor Avellana.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20el%20combo%20de%20Proteína%20ENA%20+%20Caja%20de%20Barritas%20Avellana%20por%20$67.900" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-</div>
-<h2 class="section-title">Productos Individuales</h2>
-<div class="grid">
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/proteina.webp.webp" alt="Proteína"></div>
-        <div class="card-content">
-            <div>
-                <h3>Proteína ENA True Made (453g)</h3>
-                <div class="price-box"><span class="price">$52.000</span></div>
-                <div class="desc">Suplemento proteico de alta calidad para recuperación y desarrollo muscular.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20la%20Proteína%20ENA%20por%20$52.000" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/gomex.webp.webp" alt="Gomex"></div>
-        <div class="card-content">
-            <div>
-                <h3>Frasco de Gomitas Gomex</h3>
-                <div class="price-box"><span class="price">$39.900</span></div>
-                <div class="desc">Suplemento en formato de gomitas masticables.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20las%20Gomitas%20Gomex%20por%20$39.900" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/medias.webp.webp" alt="Medias Blancas"></div>
-        <div class="card-content">
-            <div>
-                <h3>Par de Medias de Agarre (Blancas)</h3>
-                <div class="price-box"><span class="price">$12.000</span></div>
-                <div class="desc">Antideslizantes blancas para calzado deportivo de fútbol y rugby.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20las%20Medias%20de%20Agarre%20Blancas%20por%20$12.000" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/medias-negras.webp.webp.webp" alt="Medias Negras"></div>
-        <div class="card-content">
-            <div>
-                <h3>Par de Medias de Agarre (Negras)</h3>
-                <div class="price-box"><span class="price">$12.000</span></div>
-                <div class="desc">Antideslizantes negras para calzado deportivo de fútbol y rugby.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20las%20Medias%20de%20Agarre%20Negras%20por%20$12.000" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/cinta-deportiva.webp.webp" alt="Cinta de Tela"></div>
-        <div class="card-content">
-            <div>
-                <h3>Cinta de Tela Deportiva (38mm)</h3>
-                <div class="price-box"><span class="price">$11.300</span></div>
-                <div class="desc">Cinta adhesiva de alta resistencia para vendajes y sujeción.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20la%20Cinta%20de%20Tela%20por%20$11.300" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/venda-coban.webp.webp" alt="Venda Coban"></div>
-        <div class="card-content">
-            <div>
-                <h3>Venda Autoadherente Coban</h3>
-                <div class="price-box"><span class="price">$8.000</span></div>
-                <div class="desc">Venda elástica cohesiva para soporte articular y sujeción de canilleras.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20la%20Venda%20Coban%20por%20$8.000" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/cinta-pvc.webp.webp" alt="Cinta PVC"></div>
-        <div class="card-content">
-            <div>
-                <h3>Cinta PVC Aisladora</h3>
-                <div class="price-box"><span class="price">$4.900</span></div>
-                <div class="desc">Cinta plástica multiuso para fijación de medias y polainas.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20la%20Cinta%20PVC%20por%20$4.900" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/crudda-avellana-caja.webp.webp" alt="Crudda Avellana"></div>
-        <div class="card-content">
-            <div>
-                <span class="badge badge-stock">Quedan 4 cajas en stock</span>
-                <h3>Caja de Barritas Crudda - Sabor Avellana (10u)</h3>
-                <div class="price-box"><span class="price">$20.000</span></div>
-                <div class="desc">Snack energético y proteico sabor Avellana en caja x10 unidades.</div>
-            </div>
-            <a href="https://wa.me/5491173514080?text=Hola!%20Quiero%20comprar%20la%20Caja%20de%20Barritas%20Crudda%20Avellana%20por%20$20.000" class="btn" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
-    <div class="card out-of-stock">
-        <div class="img-single"><img src="https://jaybcolson-prog.github.io/onsupplements/crudda-brownie-caja.webp.webp" alt="Crudda Brownie"></div>
-        <div class="card-content">
-            <div>
-                <span class="badge badge-nostock">Sin Stock</span>
-                <h3>Caja de Barritas Crudda - Sabor Brownie (10u)</h3>
-                <div class="price-box"><span class="price" style="color: #666;">$20.000</span></div>
-                <div class="desc">Agotadas temporalmente. Consultá por disponibilidad en sabor Avellana.</div>
-            </div>
-            <span class="btn disabled">Sin Stock</span>
-        </div>
-    </div>
-</div>
-</div>
-<footer>
-    <p>&copy; 2026 On Supplements · Pagos directos y entrega local.</p>
-</footer>
+
+    <script>
+        const PHONE_NUMBER = "5491160236142";
+
+        const products = [
+            {
+                id: 1,
+                category: "suplementos",
+                name: "Proteína ENA True Made (Vanilla)",
+                price: 52000,
+                stock: 4,
+                desc: "Sachet de 453g sabor Vanilla Ice Cream. Proteína concentrada y aislada de suero de leche de máxima pureza.",
+                image: "proteina.webp.webp"
+            },
+            {
+                id: 2,
+                category: "suplementos",
+                name: "Gomitas de Creatina Gomex",
+                price: 39900,
+                stock: 5,
+                desc: "Frasco x120 gomitas sabor Blueberry. Forma práctica y rica de consumir creatina monohidratada.",
+                image: "gomex.webp.webp"
+            },
+            {
+                id: 3,
+                category: "accesorios",
+                name: "Medias de Agarre (Grip Socks) - Negras",
+                price: 12000,
+                stock: 10,
+                desc: "Medias antideslizantes negras de alto rendimiento para fútbol, rugby y entrenamiento.",
+                image: "medias-negras.webp.webp.webp"
+            },
+            {
+                id: 4,
+                category: "accesorios",
+                name: "Medias de Agarre (Grip Socks) - Blancas",
+                price: 12000,
+                stock: 10,
+                desc: "Medias antideslizantes blancas de alto rendimiento para fútbol, rugby y entrenamiento.",
+                image: "medias.webp.webp"
+            },
+            {
+                id: 5,
+                category: "accesorios",
+                name: "Cinta de Tela Deportiva (38mm)",
+                price: 11300,
+                stock: 8,
+                desc: "Cinta de tela inelástica rígida deportiva (38mm) Sportape. Ideal para vendajes y articulaciones.",
+                image: "cinta-deportiva.webp.webp"
+            },
+            {
+                id: 6,
+                category: "accesorios",
+                name: "Cinta Aisladora Deportiva (PVC)",
+                price: 4900,
+                stock: 8,
+                desc: "Cinta de PVC blanca flexible para sujetar canilleras, estribos y medias sin perder movilidad.",
+                image: "cinta-pvc.webp.webp"
+            },
+            {
+                id: 7,
+                category: "accesorios",
+                name: "Venda Autoadherente Tipo Coban",
+                price: 8000,
+                stock: 8,
+                desc: "Venda cohesiva negra (10cm x 4.5m) que se adhiere sobre sí misma para compresión muscular.",
+                image: "venda-coban.webp.webp"
+            },
+            {
+                id: 8,
+                category: "snacks",
+                name: "Caja Barritas Crudda Brownie (10u)",
+                price: 20000,
+                stock: 5,
+                desc: "Caja x10 unidades sabor Brownie. Barritas de proteína 100% vegetales, sin TACC y sin conservantes.",
+                image: "crudda-brownie-caja.webp.webp"
+            },
+            {
+                id: 9,
+                category: "snacks",
+                name: "Caja Barritas Crudda Avellanas (10u)",
+                price: 20000,
+                stock: 5,
+                desc: "Caja x10 unidades sabor Avellanas. Snack proteico vegano, sin TACC y rico en fibra natural.",
+                image: "crudda-avellana-caja.webp.webp"
+            },
+            {
+                id: 10,
+                category: "snacks",
+                name: "Barrita Crudda Brownie (Suelta)",
+                price: 2400,
+                stock: 50,
+                desc: "Barrita proteica individual sabor Brownie. Ideal para probar o llevar de snack rápido.",
+                image: "crudda-brownie-suelta.webp.webp"
+            },
+            {
+                id: 11,
+                category: "snacks",
+                name: "Barrita Crudda Avellana (Suelta)",
+                price: 2400,
+                stock: 50,
+                desc: "Barrita proteica individual sabor Avellana. Snack rápido, proteico y saludable sin TACC.",
+                image: "crudda-avellana-suelta.webp.webp"
+            }
+        ];
+
+        const cart = {};
+        let activeProductId = null;
+
+        function renderProducts() {
+            const gridSuplementos = document.getElementById('grid-suplementos');
+            const gridAccesorios = document.getElementById('grid-accesorios');
+            const gridSnacks = document.getElementById('grid-snacks');
+
+            gridSuplementos.innerHTML = '';
+            gridAccesorios.innerHTML = '';
+            gridSnacks.innerHTML = '';
+
+            products.forEach(p => {
+                const qty = cart[p.id] || 0;
+                const isOutOfStock = p.stock <= 0;
+                const reachedMax = qty >= p.stock;
+
+                const card = document.createElement('div');
+                card.className = `product-card ${isOutOfStock ? 'out-of-stock' : ''}`;
+                card.onclick = () => openModal(p.id);
+                
+                card.innerHTML = `
+                    <div class="product-img-container">
+                        <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/85/202020/00FF66?text=Foto';">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="product-bottom">
+                            <div>
+                                <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+                                <div class="stock-tag">${isOutOfStock ? '⚠️ Sin Stock' : 'Stock: ' + (p.stock - qty)}</div>
+                            </div>
+                            <div onclick="event.stopPropagation()">
+                                ${isOutOfStock ? `
+                                    <button class="btn-add" disabled>Sin Stock</button>
+                                ` : qty === 0 ? `
+                                    <button class="btn-add" onclick="updateQty(${p.id}, 1)">Agregar</button>
+                                ` : `
+                                    <div class="quantity-controls">
+                                        <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
+                                        <span class="qty-number">${qty}</span>
+                                        <button class="btn-qty" onclick="updateQty(${p.id}, 1)" ${reachedMax ? 'disabled' : ''}>+</button>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (p.category === "suplementos") {
+                    gridSuplementos.appendChild(card);
+                } else if (p.category === "accesorios") {
+                    gridAccesorios.appendChild(card);
+                } else if (p.category === "snacks") {
+                    gridSnacks.appendChild(card);
+                }
+            });
+
+            if (activeProductId) {
+                renderModalControls(activeProductId);
+            }
+        }
+
+        function openModal(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            activeProductId = id;
+            const qty = cart[id] || 0;
+
+            document.getElementById('modal-img').src = p.image;
+            document.getElementById('modal-title').textContent = p.name;
+            document.getElementById('modal-desc').textContent = p.desc;
+            document.getElementById('modal-price').textContent = `$${p.price.toLocaleString('es-AR')}`;
+            document.getElementById('modal-stock-text').textContent = p.stock <= 0 ? '⚠️ Producto Sin Stock' : `Stock disponible: ${p.stock - qty}`;
+
+            renderModalControls(id);
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function renderModalControls(id) {
+            const controlsContainer = document.getElementById('modal-controls');
+            const p = products.find(prod => prod.id === id);
+            const qty = cart[id] || 0;
+            const reachedMax = qty >= p.stock;
+
+            if (p.stock <= 0) {
+                controlsContainer.innerHTML = `<button class="btn-add" style="padding: 10px 18px; font-size: 13px;" disabled>Agotado</button>`;
+            } else if (qty === 0) {
+                controlsContainer.innerHTML = `<button class="btn-add" style="padding: 10px 18px; font-size: 13px;" onclick="updateQty(${id}, 1)">Agregar al Carrito</button>`;
+            } else {
+                controlsContainer.innerHTML = `
+                    <div class="quantity-controls" style="padding: 2px;">
+                        <button class="btn-qty" style="width: 36px; height: 36px; font-size: 16px;" onclick="updateQty(${id}, -1)">-</button>
+                        <span class="qty-number" style="width: 28px; font-size: 15px;">${qty}</span>
+                        <button class="btn-qty" style="width: 36px; height: 36px; font-size: 16px;" onclick="updateQty(${id}, 1)" ${reachedMax ? 'disabled' : ''}>+</button>
+                    </div>
+                `;
+            }
+        }
+
+        function closeModal(e) {
+            if (!e || e.target.id === 'modal-overlay' || e.target.classList.contains('modal-close')) {
+                document.getElementById('modal-overlay').classList.remove('active');
+                activeProductId = null;
+            }
+        }
+
+        function updateQty(id, change) {
+            const p = products.find(prod => prod.id === id);
+            const currentQty = cart[id] || 0;
+            const newQty = currentQty + change;
+
+            if (newQty > p.stock) return;
+
+            if (newQty <= 0) { 
+                delete cart[id]; 
+            } else { 
+                cart[id] = newQty; 
+            }
+            renderProducts();
+            updateCartBar();
+        }
+
+        function updateCartBar() {
+            let totalItems = 0;
+            let totalPrice = 0;
+            Object.keys(cart).forEach(id => {
+                const qty = cart[id];
+                const product = products.find(p => p.id == id);
+                if (product) { totalItems += qty; totalPrice += product.price * qty; }
+            });
+            document.getElementById('cart-count').textContent = `${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`;
+            document.getElementById('cart-total').textContent = `$${totalPrice.toLocaleString('es-AR')}`;
+            document.getElementById('btn-whatsapp').disabled = totalItems === 0;
+        }
+
+        function sendWhatsAppOrder() {
+            let itemsText = "";
+            let totalPrice = 0;
+            Object.keys(cart).forEach(id => {
+                const qty = cart[id];
+                const product = products.find(p => p.id == id);
+                if (product) {
+                    const subtotal = product.price * qty;
+                    totalPrice += subtotal;
+                    itemsText += `• ${qty}x ${product.name} - $${subtotal.toLocaleString('es-AR')}\n`;
+                }
+            });
+            if (itemsText === "") return;
+            let message = `¡Hola! Quisiera hacer el siguiente pedido en On Supplements:\n\n`;
+            message += itemsText;
+            message += `\n*TOTAL: $${totalPrice.toLocaleString('es-AR')}*`;
+            window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        renderProducts();
+        updateCartBar();
+    </script>
 </body>
 </html>
